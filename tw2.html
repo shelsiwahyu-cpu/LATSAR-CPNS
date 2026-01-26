@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="tw2.css">
+<script src="https://apis.google.com/js/api.js" async defer></script>
+
+
+    <title>Barang</title>
+</head>
+<body>
+    <div class="header">
+       <a href="login.html"><img src="back.png" id="back-icon" width="50px"></a>
+    </div>
+    
+    <div class="upper-btn-box">
+        <div class="left-box">
+           <button class="modal-title2" id="addBtn2"><i class="fa fa-plus"></i>&nbsp; Add BAP</button> 
+        </div>
+        <div class="right-box">
+            <i class="fa fa-search"></i>
+            <input type="text" id="brId2" onkeyup="filterTable()" placeholder="Type here to search">
+            <button class="search2" onclick="filterTable()">Search</button>
+        </div>
+    </div>
+    <div class="filterEntries2">
+        <div class="entries2">
+           <i class="name"></i>
+           <select name="" id="table_size2">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select> 
+            <i class="namebar">entries per page</i>
+        </div>
+    </div>
+
+    <div class="table-box2">
+        <table id="DataTable2">
+           <thead>
+            <tr class="">
+                <th>NO SURAT</th>
+                <th>TANGGAL DITERIMA </th>
+                <th>PIHAK KESATU</th>
+                <th>NIP</th>
+                <th>JABATAN</th>
+                <th>PIHAK KEDUA</th>
+                <th>NIP</th>
+                <th>JABATAN</th>
+                <th>NO BAP</th>
+                <th> NAMA BARANG </th>
+                <th> KUANTITAS DAN SATUAN</th>
+                <th> MERK </th>
+                <th>DOKUMENTASI BARANG</th>
+                <th>ACTION</th>
+            </tr>
+             </thead>
+
+             <tbody class="userBarang2"> 
+            </tbody>     
+        </table>
+
+        <footer>
+            <span class="showEntries2">Showing 1 to 10 of 50 entries</span>
+            <div class="pagination2">
+                <button>Prev</button>
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>4</button>
+                <button>5</button>
+                <button>Next</button>
+            </div>
+        </footer>
+    </div>
+
+ <!-- Modal Form -->
+<div id="modal2" class="modalForm2">
+    <div class="modalbar2">
+        <div class="sticky top-0 bg-indigo-600 text-white p-6 rounded-t-lg">
+            <h2 id="modalTitle" class="text-2xl font-bold">➕ Add BAP </h2>
+        </div>
+
+        <div class="p-6 space-y-4">
+
+            <!-- Row 1 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label>No Surat *</label>
+                    <input type="text" id="NOS2" class="">
+                </div>
+                <div>
+                    <label>Tanggal</label>
+                    <input type="date" id="TGL2" class="">
+                </div>
+            </div>
+
+            <!-- Pihak Kesatu -->
+            <div>
+                <h3>👤 Pihak Kesatu</h3>
+                <div>
+                    <div>
+                        <label>Nama</label>
+                        <input type="text" id="PIHAK1t2" value="">
+                    </div>
+                    <div>
+                        <label>NIP</label>
+                        <input type="text" id="NIP1t2" value="">
+                    </div>
+                    <div>
+                        <label>JABATAN</label>
+                        <input type="text" id="JBT1t2" value="">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pihak Kedua -->
+            <div>
+                <h3>👤 Pihak Kedua </h3>
+                <div>
+                    <div>
+                        <label>Nama</label>
+                        <input type="text" id="PIHAK2t2">
+                    </div>
+                    <div>
+                        <label>NIP</label>
+                        <input type="text" id="NIP2t2">
+                    </div>
+                    <div>
+                        <label>JABATAN</label>
+                        <input type="text" id="JBTt2" value="">
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- NOMOR BAP -->
+            <div>
+                <div>
+                    <label>No BAP</label>
+                    <input type="text" id="NOBAP2" placeholder="BAP-">
+                </div>
+            </div>
+
+            <!-- MULTIPLE ITEMS CONTAINER -->
+            <div id="itemsContainer" style="margin-top: 20px;"></div>
+
+
+        <!-- Modal Footer -->
+        <footer class="popupfooter2">
+            <button onclick="closeModal()" id="closeModal2" class="submitBtn2">Batal</button>
+            <button onclick="saveData()" id="submitBtn2" class="submitBtn2">
+                💾 Simpan
+            </button>
+        </footer>
+
+    </div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.min.js"></script>
+<script src="https://unpkg.com/docx@8.2.2/build/index.js"></script>
+
+    <script src="tw2.js"></script>
+</body>
+</html>
