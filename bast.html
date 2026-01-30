@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="tw2.css">
+    <link rel="stylesheet" href="bast.css">
 <script src="https://apis.google.com/js/api.js" async defer></script>
 
 
@@ -16,18 +16,19 @@
     
     <div class="upper-btn-box">
         <div class="left-box">
-           <button class="modal-title2" id="addBtn2"><i class="fa fa-plus"></i>&nbsp; Add BAP</button> 
+           <button class="modal-title" id="addBtn"><i class="fa fa-plus"></i>&nbsp; Add BAP</button>
+           
         </div>
         <div class="right-box">
             <i class="fa fa-search"></i>
-            <input type="text" id="brId2" onkeyup="filterTable()" placeholder="Type here to search">
-            <button class="search2" onclick="filterTable()">Search</button>
+            <input type="text" id="brId" onkeyup="filterTable()" placeholder="Type here to search">
+            <button class="search" onclick="filterTable()">Search</button>
         </div>
     </div>
-    <div class="filterEntries2">
-        <div class="entries2">
+    <div class="filterEntries">
+        <div class="entries">
            <i class="name"></i>
-           <select name="" id="table_size2">
+           <select name="" id="table_size">
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="50">50</option>
@@ -37,34 +38,37 @@
         </div>
     </div>
 
-    <div class="table-box2">
-        <table id="DataTable2">
+    <div class="table-box">
+        <table id="DataTable">
            <thead>
             <tr class="">
                 <th>NO SURAT</th>
                 <th>TANGGAL DITERIMA </th>
                 <th>PIHAK KESATU</th>
                 <th>NIP</th>
-                <th>JABATAN</th>
                 <th>PIHAK KEDUA</th>
                 <th>NIP</th>
-                <th>JABATAN</th>
+                <th>JENIS BELANJA MODAL</th>
+                 <th>DESKRIPSI BARANG/JASA</th>
+                <th>JUMLAH/SATUAN</th>
                 <th>NO BAP</th>
-                <th> NAMA BARANG </th>
-                <th> KUANTITAS DAN SATUAN</th>
-                <th> MERK </th>
+                <th>URAIAN DAN IDENTITAS BARANG/JASA</th>
+                <th>HARGA Per Item</th>
+                <th>HARGA SEBELUM PAJAK (Rp)</th>
+                <th>PPN Per Item (Rp) </th>
+                <th>HARGA SETELAH PAJAK (Rp) </th>
                 <th>DOKUMENTASI BARANG</th>
                 <th>ACTION</th>
             </tr>
              </thead>
 
-             <tbody class="userBarang2"> 
+             <tbody class="userBarang"> 
             </tbody>     
         </table>
 
         <footer>
-            <span class="showEntries2">Showing 1 to 10 of 50 entries</span>
-            <div class="pagination2">
+            <span class="showEntries">Showing 1 to 10 of 50 entries</span>
+            <div class="pagination">
                 <button>Prev</button>
                 <button class="active">1</button>
                 <button>2</button>
@@ -77,8 +81,8 @@
     </div>
 
  <!-- Modal Form -->
-<div id="modal2" class="modalForm2">
-    <div class="modalbar2">
+<div id="modal" class="modalForm">
+    <div class="modalbar">
         <div class="sticky top-0 bg-indigo-600 text-white p-6 rounded-t-lg">
             <h2 id="modalTitle" class="text-2xl font-bold">➕ Add BAP </h2>
         </div>
@@ -89,29 +93,25 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label>No Surat *</label>
-                    <input type="text" id="NOS2" class="">
+                    <input type="text" id="NOS" class="">
                 </div>
                 <div>
                     <label>Tanggal</label>
-                    <input type="date" id="TGL2" class="">
+                    <input type="date" id="TGL" class="">
                 </div>
             </div>
 
             <!-- Pihak Kesatu -->
             <div>
-                <h3>👤 Pihak Kesatu</h3>
+                <h3>👤 Pihak Pertama</h3>
                 <div>
                     <div>
-                        <label>Nama</label>
-                        <input type="text" id="PIHAK1t2" value="">
+                        <label>Nama *</label>
+                        <input type="text" id="PIHAK1" >
                     </div>
                     <div>
                         <label>NIP</label>
-                        <input type="text" id="NIP1t2" value="">
-                    </div>
-                    <div>
-                        <label>JABATAN</label>
-                        <input type="text" id="JBT1t2" value="">
+                        <input type="text" id="NIP1">
                     </div>
                 </div>
             </div>
@@ -122,25 +122,32 @@
                 <div>
                     <div>
                         <label>Nama</label>
-                        <input type="text" id="PIHAK2t2">
+                        <input type="text" id="PIHAK2">
                     </div>
                     <div>
                         <label>NIP</label>
-                        <input type="text" id="NIP2t2">
-                    </div>
-                    <div>
-                        <label>JABATAN</label>
-                        <input type="text" id="JBTt2" value="">
+                        <input type="text" id="NIP2">
                     </div>
                 </div>
             </div>
 
+            <!-- Detail Barang (Header) -->
+            <div>
+                <div>
+                    <label>Jenis Belanja Modal</label>
+                    <input type="text" id="JenBel">
+                </div>
+                <div>
+                    <label>Deskripsi Barang / Jasa</label>
+                    <input type="text" id="Deskripsi">
+                </div>
+            </div>
 
             <!-- NOMOR BAP -->
             <div>
                 <div>
                     <label>No BAP</label>
-                    <input type="text" id="NOBAP2" placeholder="BAP-">
+                    <input type="text" id="NOBAP" placeholder="BAP-">
                 </div>
             </div>
 
@@ -149,9 +156,9 @@
 
 
         <!-- Modal Footer -->
-        <footer class="popupfooter2">
-            <button onclick="closeModal()" id="closeModal2" class="submitBtn2">Batal</button>
-            <button onclick="saveData()" id="submitBtn2" class="submitBtn2">
+        <footer class="popupfooter">
+            <button onclick="closeModal()" id="closeModal" class="submitBtn">Batal</button>
+            <button onclick="saveData()" id="submitBtn" class="submitBtn">
                 💾 Simpan
             </button>
         </footer>
@@ -162,6 +169,6 @@
 <script src="https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.min.js"></script>
 <script src="https://unpkg.com/docx@8.2.2/build/index.js"></script>
 
-    <script src="tw2.js"></script>
+    <script src="bast.js"></script>
 </body>
 </html>

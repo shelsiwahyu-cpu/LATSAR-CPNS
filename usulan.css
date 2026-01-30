@@ -1,4 +1,4 @@
-  * {
+* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -30,20 +30,13 @@
             transform: translateX(-5px);
         }
 
-        .upper-btn-box {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+        /* Memastikan tombol "Add Nota Permintaan" berada di kiri */
+        .upper-btn-boxNP .modal-titleNP {
+            margin-right: auto;
         }
 
-        .modal-title3 {
+        .modal-titleNP {
             background: #4CAF50;
             color: white;
             border: none;
@@ -55,19 +48,64 @@
             transition: all 0.3s;
         }
 
-        .modal-title3:hover {
+        .modal-titleNP:hover {
             background: #45a049;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-        .right-box {
+        .right-boxNP {
             display: flex;
             gap: 10px;
             align-items: center;
+            margin-left: 60%;
         }
 
-        .right-box input {
+         .upper-btn-boxNP {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .modal-titleNP {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .modal-titleNP:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .right-boxNP {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .upper-btn-boxNP {
+            background-color: white;
+        }
+
+        .right-boxNP input {
             padding: 10px 15px;
             border: 2px solid #ddd;
             border-radius: 6px;
@@ -75,7 +113,7 @@
             min-width: 250px;
         }
 
-        .search3 {
+        .searchNP {
             background: #2196F3;
             color: white;
             border: none;
@@ -85,31 +123,32 @@
             transition: all 0.3s;
         }
 
-        .search3:hover {
+        .searchNP:hover {
             background: #1976D2;
         }
 
-        .filterEntries3 {
+
+        .filterEntriesNP {
             padding: 5px 20px;
             border-radius: 10px;
             margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .entries3 {
+        .entriesNP {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .entries3 select {
+        .entriesNP select {
             padding: 8px 12px;
             border: 2px solid #ddd;
             border-radius: 6px;
             font-size: 14px;
         }
 
-        .table-box3 {
+        .table-boxNP {
             background: white;
             border-radius: 10px;
             padding: 20px;
@@ -117,19 +156,19 @@
             overflow-x: auto;
         }
 
-        #DataTable3 {
+        #DataTableNP {
             width: 100%;
             border-collapse: collapse;
             min-width: 1200px;
             font-size:13px;
         }
 
-        #DataTable3 thead {
+        #DataTableNP thead {
             background: #667eea;
             color: white;
         }
 
-        #DataTable3 th {
+        #DataTableNP th {
             padding: 10px;
             text-align: center;
             font-weight: 600;
@@ -138,31 +177,31 @@
             font-size:12px;
         }
 
-        #DataTable3 td {
+        #DataTableNP td {
             padding: 10px;
             border: 1px solid #ddd;
         }
 
-        #DataTable3 tbody tr:hover {
+        #DataTableNP tbody tr:hover {
             background: #f5f5f5;
         }
 
         /* Column-specific alignment (adjust indices as per your table columns) */
-        #DataTable3 tbody tr td:nth-child(1),
-        #DataTable3 tbody tr td:nth-child(4),
-        #DataTable3 tbody tr td:nth-child(7),
-        #DataTable3 tbody tr td:nth-child(9),
-        #DataTable3 tbody tr td:nth-child(10),
-        #DataTable3 tbody tr td:nth-child(12),
-        #DataTable3 tbody tr td:nth-child(15),
-        #DataTable3 tbody tr td:nth-child(16) {
+        #DataTableNP tbody tr td:nth-child(1),
+        #DataTableNP tbody tr td:nth-child(4),
+        #DataTableNP tbody tr td:nth-child(7),
+        #DataTableNP tbody tr td:nth-child(9),
+        #DataTableNP tbody tr td:nth-child(10),
+        #DataTableNP tbody tr td:nth-child(12),
+        #DataTableNP tbody tr td:nth-child(15),
+        #DataTableNP tbody tr td:nth-child(16) {
         text-align:center;
         }
-        #DataTable3  tbody tr td:nth-child(11){ text-align:right; }
+        #DataTableNP tbody tr td:nth-child(11){ text-align:right; }
 
         /* Image in cell */
-        #DataTable3  tbody td img{ width:60px;height:40px;object-fit:cover;border-radius:6px;border:1px solid #e6eefc;cursor:pointer;transition:transform .18s ease}
-        #DataTable3  tbody td img:hover{transform:scale(1.65);z-index:10;box-shadow:0 10px 30px rgba(20,60,120,0.18)}
+        #DataTableNP tbody td img{ width:60px;height:40px;object-fit:cover;border-radius:6px;border:1px solid #e6eefc;cursor:pointer;transition:transform .18s ease}
+        #DataTableNP tbody td img:hover{transform:scale(1.65);z-index:10;box-shadow:0 10px 30px rgba(20,60,120,0.18)}
 
         footer {
             display: flex;
@@ -173,12 +212,12 @@
             border-top: 2px solid #eee;
         }
 
-        .pagination3 {
+        .paginationNP {
             display: flex;
             gap: 5px;
         }
 
-        .pagination3 button {
+        .paginationNP button {
             padding: 8px 12px;
             border: 1px solid #ddd;
             background: white;
@@ -187,25 +226,25 @@
             transition: all 0.3s;
         }
 
-        .pagination3 button:hover:not(:disabled) {
+        .paginationNP button:hover:not(:disabled) {
             background: #667eea;
             color: white;
         }
 
-        .pagination3 button.active {
+        .paginationNP button.active {
             background: #667eea;
             color: white;
             font-weight: bold;
         }
 
-        .pagination3 button:disabled {
+        .paginationNP button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
         /* Modal Styles */
         /* ---------- Modal (matches HTML markup: #modal > .modalbar) ---------- */
-        #modal3{
+        #modalNP{
           display: none ;
           position:fixed;
           inset:0;
@@ -220,17 +259,17 @@
           transition:opacity .2s ease;
           backdrop-filter: blur(4px);
         }
-        #modal3.active {
+        #modalNP.active {
           display: flex !important;
         }   
 
-         .modalbar3 h2{
+         .modalbarNP h2{
             background-color: rgb(81, 125, 192); 
             text-align: center;
             padding: 20px;
         }
 
-        .modalForm3 {
+        .modalFormNP {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -243,11 +282,11 @@
             backdrop-filter: blur(5px);
         }
 
-        .modalForm3.active {
+        .modalFormNP.active {
             display: block;
         }
 
-        .modalbar3 {
+        .modalbarNP {
             background: white;
             margin: 2% auto;
             border-radius: 12px;
@@ -270,15 +309,15 @@
             }
         }
 
-        .modalbar3 label {
+        .modalbarNP label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: #333;
         }
 
-        .modalbar3 input,
-        .modalbar3 textarea {
+        .modalbarNP input,
+        .modalbarNP textarea {
             width: 100%;
             padding: 10px;
             border: 2px solid #ddd;
@@ -287,20 +326,20 @@
             transition: border-color 0.3s;
         }
 
-        .modalbar3 input:focus,
-        .modalbar3 textarea:focus {
+        .modalbarNP input:focus,
+        .modalbarNP textarea:focus {
             outline: none;
             border-color: #667eea;
         }
 
-        .modalbar3 h3 {
+        .modalbarNP h3 {
             color: #667eea;
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 2px solid #eee;
         }
 
-        .popupfooter3 {
+        .popupfooterNP {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
@@ -310,7 +349,7 @@
             border-radius: 0 0 12px 12px;
         }
 
-        .submitBtn3 {
+        .submitBtnNP {
             padding: 12px 24px;
             border: none;
             border-radius: 6px;
@@ -320,21 +359,21 @@
             transition: all 0.3s;
         }
 
-        #closeModal3 {
+        #closeModalNP {
             background: #f44336;
             color: white;
         }
 
-        #closeModal3:hover {
+        #closeModalNP:hover {
             background: #d32f2f;
         }
 
-        #submitBtn3 {
+        #submitBtnNP {
             background: #4CAF50;
             color: white;
         }
 
-        #submitBtn3:hover {
+        #submitBtnNP:hover {
             background: #45a049;
         }
 
@@ -348,12 +387,13 @@
                 flex-direction: column;
             }
 
-            .right-box {
+            .right-boxNP {
                 width: 100%;
                 flex-direction: column;
+                margin-left: 0;
             }
 
-            .right-box input {
+            .right-boxNP input {
                 width: 100%;
             }
 

@@ -1,3 +1,4 @@
+
   * {
             margin: 0;
             padding: 0;
@@ -43,7 +44,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .modal-title2 {
+        .modal-title {
             background: #4CAF50;
             color: white;
             border: none;
@@ -55,7 +56,7 @@
             transition: all 0.3s;
         }
 
-        .modal-title2:hover {
+        .modal-title:hover {
             background: #45a049;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -75,7 +76,7 @@
             min-width: 250px;
         }
 
-        .search2 {
+        .search {
             background: #2196F3;
             color: white;
             border: none;
@@ -85,31 +86,31 @@
             transition: all 0.3s;
         }
 
-        .search2:hover {
+        .search:hover {
             background: #1976D2;
         }
 
-        .filterEntries2 {
+        .filterEntries {
             padding: 5px 20px;
             border-radius: 10px;
             margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .entries2 {
+        .entries {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .entries2 select {
+        .entries select {
             padding: 8px 12px;
             border: 2px solid #ddd;
             border-radius: 6px;
             font-size: 14px;
         }
 
-        .table-box2 {
+        .table-box {
             background: white;
             border-radius: 10px;
             padding: 20px;
@@ -117,19 +118,19 @@
             overflow-x: auto;
         }
 
-        #DataTable2 {
+        #DataTable {
             width: 100%;
             border-collapse: collapse;
             min-width: 1200px;
             font-size:13px;
         }
 
-        #DataTable2 thead {
+        #DataTable thead {
             background: #667eea;
             color: white;
         }
 
-        #DataTable2 th {
+        #DataTable th {
             padding: 10px;
             text-align: center;
             font-weight: 600;
@@ -138,31 +139,31 @@
             font-size:12px;
         }
 
-        #DataTable2 td {
+        #DataTable td {
             padding: 10px;
             border: 1px solid #ddd;
         }
 
-        #DataTable2 tbody tr:hover {
+        #DataTable tbody tr:hover {
             background: #f5f5f5;
         }
 
         /* Column-specific alignment (adjust indices as per your table columns) */
-        #DataTable2 tbody tr td:nth-child(1),
-        #DataTable2 tbody tr td:nth-child(4),
-        #DataTable2 tbody tr td:nth-child(7),
-        #DataTable2 tbody tr td:nth-child(9),
-        #DataTable2 tbody tr td:nth-child(10),
-        #DataTable2 tbody tr td:nth-child(12),
-        #DataTable2 tbody tr td:nth-child(15),
-        #DataTable2 tbody tr td:nth-child(16) {
+        #DataTable tbody tr td:nth-child(1),
+        #DataTable tbody tr td:nth-child(4),
+        #DataTable tbody tr td:nth-child(7),
+        #DataTable tbody tr td:nth-child(9),
+        #DataTable tbody tr td:nth-child(10),
+        #DataTable tbody tr td:nth-child(12),
+        #DataTable tbody tr td:nth-child(15),
+        #DataTable tbody tr td:nth-child(16) {
         text-align:center;
         }
-        #DataTable2  tbody tr td:nth-child(11){ text-align:right; }
+        #DataTable  tbody tr td:nth-child(11){ text-align:right; }
 
         /* Image in cell */
-        #DataTable2  tbody td img{ width:60px;height:40px;object-fit:cover;border-radius:6px;border:1px solid #e6eefc;cursor:pointer;transition:transform .18s ease}
-        #DataTable2  tbody td img:hover{transform:scale(1.65);z-index:10;box-shadow:0 10px 30px rgba(20,60,120,0.18)}
+        #DataTable  tbody td img{ width:60px;height:40px;object-fit:cover;border-radius:6px;border:1px solid #e6eefc;cursor:pointer;transition:transform .18s ease}
+        #DataTable  tbody td img:hover{transform:scale(1.65);z-index:10;box-shadow:0 10px 30px rgba(20,60,120,0.18)}
 
         footer {
             display: flex;
@@ -173,12 +174,12 @@
             border-top: 2px solid #eee;
         }
 
-        .pagination2 {
+        .pagination {
             display: flex;
             gap: 5px;
         }
 
-        .pagination2 button {
+        .pagination button {
             padding: 8px 12px;
             border: 1px solid #ddd;
             background: white;
@@ -187,26 +188,26 @@
             transition: all 0.3s;
         }
 
-        .pagination2 button:hover:not(:disabled) {
+        .pagination button:hover:not(:disabled) {
             background: #667eea;
             color: white;
         }
 
-        .pagination2 button.active {
+        .pagination button.active {
             background: #667eea;
             color: white;
             font-weight: bold;
         }
 
-        .pagination2 button:disabled {
+        .pagination button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
         /* Modal Styles */
         /* ---------- Modal (matches HTML markup: #modal > .modalbar) ---------- */
-        #modal2{
-          display: none ;
+        #modal{
+          display: none !important;
           position:fixed;
           inset:0;
           top: 5%;
@@ -220,11 +221,16 @@
           transition:opacity .2s ease;
           backdrop-filter: blur(4px);
         }
-        #modal2.active {
+        #modal.active {
           display: flex !important;
         }   
 
-        .modalForm2 {
+        .modalbar h2{
+            background-color: rgb(81, 125, 192); 
+            text-align: center;
+            padding: 20px;
+        }
+        .modalForm {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -237,16 +243,11 @@
             backdrop-filter: blur(5px);
         }
 
-        .modalForm2.active {
+        .modalForm.active {
             display: block;
         }
 
-         .modalbar2 h2{
-            background-color: rgb(81, 125, 192); 
-            text-align: center;
-            padding: 20px;
-        }
-        .modalbar2 {
+        .modalbar {
             background: white;
             margin: 2% auto;
             border-radius: 12px;
@@ -269,15 +270,15 @@
             }
         }
 
-        .modalbar2 label {
+        .modalbar label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: #333;
         }
 
-        .modalbar2 input,
-        .modalbar2 textarea {
+        .modalbar input,
+        .modalbar textarea {
             width: 100%;
             padding: 10px;
             border: 2px solid #ddd;
@@ -286,20 +287,20 @@
             transition: border-color 0.3s;
         }
 
-        .modalbar2 input:focus,
-        .modalbar2 textarea:focus {
+        .modalbar input:focus,
+        .modalbar textarea:focus {
             outline: none;
             border-color: #667eea;
         }
 
-        .modalbar2 h3 {
+        .modalbar h3 {
             color: #667eea;
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 2px solid #eee;
         }
 
-        .popupfooter2 {
+        .popupfooter {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
@@ -309,7 +310,7 @@
             border-radius: 0 0 12px 12px;
         }
 
-        .submitBtn2 {
+        .submitBtn {
             padding: 12px 24px;
             border: none;
             border-radius: 6px;
@@ -319,21 +320,21 @@
             transition: all 0.3s;
         }
 
-        #closeModal2 {
+        #closeModal {
             background: #f44336;
             color: white;
         }
 
-        #closeModal2:hover {
+        #closeModal:hover {
             background: #d32f2f;
         }
 
-        #submitBtn2 {
+        #submitBtn {
             background: #4CAF50;
             color: white;
         }
 
-        #submitBtn2:hover {
+        #submitBtn:hover {
             background: #45a049;
         }
 

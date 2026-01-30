@@ -212,15 +212,15 @@ function renderTable(filteredData = null) {
         const items = item.items || [];
         
         const namaBarangDisplay = items.length > 0 
-            ? items.map((i, idx) => `${idx + 1}. ${escapeHtml(i.NamaBarang || '-')}`).join('<br>')
+            ? items.map((i, idx) => `${idx + 1}. ${escapeHtml((i.NamaBarang || '-').toUpperCase())}`).join('<br>')
             : '-';
         
         const kuantitasSatuanDisplay = items.length > 0 
-            ? items.map((i, idx) => `${idx + 1}. ${escapeHtml(i.Kuantitas || '-')} ${escapeHtml(i.Satuan || '')}`.trim()).join('<br>')
+            ? items.map((i, idx) => `${idx + 1}. ${escapeHtml(i.Kuantitas || '-')} ${escapeHtml((i.Satuan || '').toUpperCase())}`.trim()).join('<br>')
             : '-';
 
         const merkDisplay = items.length > 0 
-            ? items.map((i, idx) => `${idx + 1}. ${escapeHtml(i.Merk || '-')}`).join('<br>')
+            ? items.map((i, idx) => `${idx + 1}. ${escapeHtml((i.Merk || '-').toUpperCase())}`).join('<br>')
             : '-';
         
         let docsDisplay = '<span style="color: #999;">-</span>';
@@ -240,13 +240,12 @@ function renderTable(filteredData = null) {
 
         return `<tr style="border-bottom: 1px solid #e0e0e0;">
             <td style="padding: 10px;">${escapeHtml(item.NOS || '-')}</td>
-            <td style="padding: 10px;">${formatDate(item.TGL)}</td>
-            <td style="padding: 10px;">${escapeHtml(item.PIHAK1 || '-')}</td>
+            <td style="padding: 10px;">${formatDate(item.TGL || '-').toUpperCase()}</td>
+            <td style="padding: 10px;">${escapeHtml((item.PIHAK1 || '-').toUpperCase())}</td>
             <td style="padding: 10px;">${escapeHtml(item.NIP1 || '-')}</td>
-            <td style="padding: 10px;">${escapeHtml(item.JBT1 || '-')}</td>
-            <td style="padding: 10px;">${escapeHtml(item.PIHAK2 || '-')}</td>
+            <td style="padding: 10px;">${escapeHtml((item.PIHAK2 || '-').toUpperCase())}</td>
             <td style="padding: 10px;">${escapeHtml(item.NIP2 || '-')}</td>
-            <td style="padding: 10px;">${escapeHtml(item.JBT2 || '-')}</td>
+            <td style="padding: 10px;">${escapeHtml((item.JBT2 || '-').toUpperCase())}</td>
             <td style="padding: 10px;">${escapeHtml(item.NOBAP || '-')}</td>
             <td style="padding: 10px; max-width: 200px;"><div style="max-height: 150px; overflow-y: auto; font-size: 0.9em; line-height: 1.6;">${namaBarangDisplay}</div></td>
             <td style="padding: 10px; max-width: 150px;"><div style="max-height: 150px; text-align: center; overflow-y: auto; font-size: 0.9em; line-height: 1.6;">${kuantitasSatuanDisplay}</div></td>
@@ -816,16 +815,44 @@ async function exportToWord(id) {
             }
             return u8arr;
         }
+        // Helper function untuk Title Case dengan pengecualian akronim
+        function toTitleCaseWithAcronym(str) {
+            if (!str) return str;
+            
+            // Daftar akronim yang harus tetap uppercase
+            const acronyms = ['UPT', 'RSBG', 'NIP'];
+            
+            return str
+        .toLowerCase()
+        .split(' ')
+        .map(word => {
+            // Cek apakah kata adalah akronim
+            if (acronyms.includes(word.toUpperCase())) {
+                return word.toUpperCase();
+            }
+            // Jika bukan, kapitalisasi huruf pertama saja
+            return word.charAt(0).toUpperCase() + word.slice(1);
+        })
+        .join(' ');
+        }
 
+        // Helper function untuk Title Case (Huruf Awal Besar)
+        function toTitleCase(str) {
+         if (!str) return str;
+        return str
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}
         const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
                 WidthType, AlignmentType, BorderStyle, ImageRun, VerticalAlign } = docx;
 
-        const tanggal = item.TGL ? new Date(item.TGL) : new Date();
+       const tanggal = item.TGL ? new Date(item.TGL) : new Date();
         const hariNama = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu'];
-        const bulanNama = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli',
-                           'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        const bulanNama = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
         const hari = hariNama[tanggal.getDay()];
-        const tgl = tanggal.getDate();
+        const tgl = String(tanggal.getDate()).padStart(2, '0'); // Format 2 digit
         const bulan = bulanNama[tanggal.getMonth()];
         const tahun = tanggal.getFullYear();
 
@@ -993,12 +1020,12 @@ async function exportToWord(id) {
         // Judul
         children.push(
             new Paragraph({
-                children: [ new TextRun({ text: "TANDA TERIMA PENDISTRIBUSIAN BARANG", bold: true, size: 24, underline: {} }) ],
+                children: [ new TextRun({ text: "Tanda Terima Pendistribusian Barang", bold: true, size: 24, underline: {} }) ],
                 alignment: AlignmentType.CENTER,
                 spacing: { after: 100 }
             }),
             new Paragraph({ 
-                children: [ new TextRun({ text: `Nomor: ${item.NOS || ''}`, size: 22 }) ],
+                children: [ new TextRun({ text: `Nomor: ${item.NOS || ''}`, size: 23 }) ],
                 alignment: AlignmentType.CENTER, 
                 spacing: { after: 300 } 
             })
@@ -1006,7 +1033,67 @@ async function exportToWord(id) {
 
         children.push(
             new Paragraph({
-                children: [ new TextRun({ text: "Yang bertanda tangan di bawah ini :", size: 22 }) ],
+                children: [ new TextRun({ text: "Dasar Penyaluran Pengeluaran Barang  :", size: 23 }) ],
+                spacing: { after: 200 }
+            })
+        );
+         children.push(
+            new Table({
+                rows: [
+                    new TableRow({
+                        children: [
+                            new TableCell({
+                                children: [new Paragraph({ children: [new TextRun({ text: "Nomor", size: 23 })] })],
+                                borders: noBorders,
+                                width: { size: 20, type: WidthType.PERCENTAGE }
+                            }),
+                            new TableCell({
+                                children: [new Paragraph({ children: [new TextRun({ text: ":", size: 23 })] })],
+                                borders: noBorders,
+                                width: { size: 5, type: WidthType.PERCENTAGE }
+                            }),
+                            new TableCell({
+                                children: [new Paragraph({ children: [new TextRun({ text: item.NOS || '', size: 23 })] })],
+                                borders: noBorders,
+                                width: { size: 75, type: WidthType.PERCENTAGE }
+                            })
+                        ]
+                    }),
+                    new TableRow({
+                        children: [
+                            new TableCell({
+                                children: [new Paragraph({ children: [new TextRun({ text: "Tanggal", size: 23 })] })],
+                                borders: noBorders
+                            }),
+                            new TableCell({
+                                children: [new Paragraph({ children: [new TextRun({ text: ":", size: 23 })] })],
+                                borders: noBorders
+                            }),
+                            new TableCell({
+                                children: [new Paragraph({ children: [new TextRun({ text: `${tgl} ${bulan} ${tahun}` || '', size: 23 })] })],
+                                
+                                borders: noBorders
+                            })
+                        ]
+                    })],
+                width: { size: 100, type: WidthType.PERCENTAGE },
+                borders: {
+                    top: { style: BorderStyle.NONE },
+                    bottom: { style: BorderStyle.NONE },
+                    left: { style: BorderStyle.NONE },
+                    right: { style: BorderStyle.NONE },
+                    insideHorizontal: { style: BorderStyle.NONE },
+                    insideVertical: { style: BorderStyle.NONE }
+                }
+            })
+        );
+
+        children.push(new Paragraph({ text: "", spacing: { after: 80 } }));
+
+
+        children.push(
+            new Paragraph({
+                children: [ new TextRun({ text: "Pihak Yang Menyerahkan :", size: 22 }) ],
                 spacing: { after: 200 }
             })
         );
@@ -1018,17 +1105,17 @@ async function exportToWord(id) {
                     new TableRow({
                         children: [
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: "Nama", size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: "Nama", size: 23 })] })],
                                 borders: noBorders,
                                 width: { size: 20, type: WidthType.PERCENTAGE }
                             }),
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: ":", size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: ":", size: 23 })] })],
                                 borders: noBorders,
                                 width: { size: 5, type: WidthType.PERCENTAGE }
                             }),
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: item.PIHAK1 || '', size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: toTitleCase(item.PIHAK1 || ""), size: 23 })] })],
                                 borders: noBorders,
                                 width: { size: 75, type: WidthType.PERCENTAGE }
                             })
@@ -1037,15 +1124,15 @@ async function exportToWord(id) {
                     new TableRow({
                         children: [
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: "NIP", size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: "NIP", size: 23 })] })],
                                 borders: noBorders
                             }),
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: ":", size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: ":", size: 23 })] })],
                                 borders: noBorders
                             }),
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: item.NIP1 || '', size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: item.NIP1 || '', size: 23 })] })],
                                 borders: noBorders
                             })
                         ]
@@ -1053,33 +1140,20 @@ async function exportToWord(id) {
                     new TableRow({
                         children: [
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: "Jabatan", size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: "Jabatan", size: 23 })] })],
                                 borders: noBorders
                             }),
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: ":", size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: ":", size: 23 })] })],
                                 borders: noBorders
                             }),
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: item.JBT1 || "Pengurus Barang UPT RSBG Tuban", size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: toTitleCaseWithAcronym(item.JBT1 || "Pengurus Barang UPT RSBG Tuban"), size: 23 })] })],
                                 borders: noBorders
                             })
                         ]
                     }),
-                    new TableRow({
-                        children: [
-                            new TableCell({
-                                children: [new Paragraph({ 
-                                    children: [
-                                        new TextRun({ text: "Selanjutnya disebut sebagai ", size: 22 }),
-                                        new TextRun({ text: "pihak ke I.", bold: true, size: 22 })
-                                    ]
-                                })],
-                                borders: noBorders,
-                                columnSpan: 3
-                            })
-                        ]
-                    })
+                   
                 ],
                 width: { size: 100, type: WidthType.PERCENTAGE },
                 borders: {
@@ -1093,7 +1167,20 @@ async function exportToWord(id) {
             })
         );
 
-        children.push(new Paragraph({ text: "", spacing: { after: 200 } }));
+
+        children.push(new Paragraph({ text: "", spacing: { after: 80 } }));
+
+
+        // Pihak Kedua
+
+        children.push(
+            new Paragraph({
+                children: [ new TextRun({ text: "Pihak Yang Menerima :", size: 23 }) ],
+                spacing: { after: 200 }
+            })
+        );
+
+        
 
         // Pihak Kedua
         children.push(
@@ -1102,17 +1189,17 @@ async function exportToWord(id) {
                     new TableRow({
                         children: [
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: "Nama", size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: "Nama", size: 23 })] })],
                                 borders: noBorders,
                                 width: { size: 20, type: WidthType.PERCENTAGE }
                             }),
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: ":", size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: ":", size: 23 })] })],
                                 borders: noBorders,
                                 width: { size: 5, type: WidthType.PERCENTAGE }
                             }),
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: item.PIHAK2 || '', size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: toTitleCase(item.PIHAK2 || ""), size: 23 })] })],
                                 borders: noBorders,
                                 width: { size: 75, type: WidthType.PERCENTAGE }
                             })
@@ -1121,15 +1208,15 @@ async function exportToWord(id) {
                     new TableRow({
                         children: [
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: "NIP", size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: "NIP", size: 23 })] })],
                                 borders: noBorders
                             }),
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: ":", size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: ":", size: 23 })] })],
                                 borders: noBorders
                             }),
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: item.NIP2 || '', size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: item.NIP2 || '', size: 23 })] })],
                                 borders: noBorders
                             })
                         ]
@@ -1137,33 +1224,20 @@ async function exportToWord(id) {
                     new TableRow({
                         children: [
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: "Jabatan", size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: "Jabatan", size: 23 })] })],
                                 borders: noBorders
                             }),
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: ":", size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: ":", size: 23 })] })],
                                 borders: noBorders
                             }),
                             new TableCell({
-                                children: [new Paragraph({ children: [new TextRun({ text: item.JBT2 || "", size: 22 })] })],
+                                children: [new Paragraph({ children: [new TextRun({ text: toTitleCase(item.JBT2 || ""), size: 23 })] })],
                                 borders: noBorders
                             })
                         ]
                     }),
-                    new TableRow({
-                        children: [
-                            new TableCell({
-                                children: [new Paragraph({ 
-                                    children: [
-                                        new TextRun({ text: "Selanjutnya disebut sebagai ", size: 22 }),
-                                        new TextRun({ text: "pihak ke II", bold: true, size: 22 })
-                                    ]
-                                })],
-                                borders: noBorders,
-                                columnSpan: 3
-                            })
-                        ]
-                    })
+                   
                 ],
                 width: { size: 100, type: WidthType.PERCENTAGE },
                 borders: {
@@ -1177,24 +1251,9 @@ async function exportToWord(id) {
             })
         );
 
-        // Kalimat pembuka
-        children.push(
-            new Paragraph({
-                children: [
-                    new TextRun({ text: `Pada hari ini `, size: 22 }),
-                    new TextRun({ text: `${hari}`, bold: true, size: 22 }),
-                    new TextRun({ text: ` tanggal `, size: 22 }),
-                    new TextRun({ text: `${tglTerbilang}`, bold: true, size: 22 }),
-                    new TextRun({ text: ` bulan `, size: 22 }),
-                    new TextRun({ text: `${bulan}`, bold: true, size: 22 }),
-                    new TextRun({ text: ` tahun `, size: 22 }),
-                    new TextRun({ text: `${tahunTerbilang}`, bold: true, size: 22 }),
-                    new TextRun({ text: ` pihak ke I telah menyerahkan barang kepada pihak ke II, dengan rincian sebagai berikut:`, size: 22 })
-                ],
-                spacing: { before: 300, after: 300 },
-                alignment: AlignmentType.JUSTIFIED
-            })
-        );
+    //    Pembatas sebelum tabel barang 
+
+          children.push(new Paragraph({ text: "", spacing: { before: 100, after: 100 } }));
 
         // Tabel Barang dengan kolom Merk
         const items = item.items || [];
@@ -1205,7 +1264,7 @@ async function exportToWord(id) {
                 children: [
                     new TableCell({
                         children: [new Paragraph({ 
-                            children: [new TextRun({ text: "No.", bold: true, size: 20 })], 
+                            children: [new TextRun({ text: "NO.", bold: true, size: 22 })], 
                             alignment: AlignmentType.CENTER
                         })],
                         width: { size: 8, type: WidthType.PERCENTAGE },
@@ -1214,7 +1273,7 @@ async function exportToWord(id) {
                     }),
                     new TableCell({
                         children: [new Paragraph({ 
-                            children: [new TextRun({ text: "NAMA BARANG", bold: true, size: 20 })], 
+                            children: [new TextRun({ text: "NAMA BARANG", bold: true, size: 22 })], 
                             alignment: AlignmentType.CENTER
                         })],
                         width: { size: 40, type: WidthType.PERCENTAGE },
@@ -1223,7 +1282,7 @@ async function exportToWord(id) {
                     }),
                     new TableCell({
                         children: [new Paragraph({ 
-                            children: [new TextRun({ text: "KUANTITAS", bold: true, size: 20 })], 
+                            children: [new TextRun({ text: "KUANTITAS", bold: true, size: 22 })], 
                             alignment: AlignmentType.CENTER
                         })],
                         width: { size: 15, type: WidthType.PERCENTAGE },
@@ -1232,7 +1291,7 @@ async function exportToWord(id) {
                     }),
                     new TableCell({
                         children: [new Paragraph({ 
-                            children: [new TextRun({ text: "SATUAN", bold: true, size: 20 })], 
+                            children: [new TextRun({ text: "SATUAN", bold: true, size: 22 })], 
                             alignment: AlignmentType.CENTER
                         })],
                         width: { size: 15, type: WidthType.PERCENTAGE },
@@ -1241,7 +1300,7 @@ async function exportToWord(id) {
                     }),
                     new TableCell({
                         children: [new Paragraph({ 
-                            children: [new TextRun({ text: "MERK", bold: true, size: 20 })], 
+                            children: [new TextRun({ text: "MERK", bold: true, size: 22 })], 
                             alignment: AlignmentType.CENTER
                         })],
                         width: { size: 22, type: WidthType.PERCENTAGE },
@@ -1258,7 +1317,7 @@ async function exportToWord(id) {
                     children: [
                         new TableCell({
                             children: [new Paragraph({ 
-                                children: [new TextRun({ text: String(idx + 1) + ".", size: 20 })], 
+                                children: [new TextRun({ text: String(idx + 1) + ".", size: 22 })], 
                                 alignment: AlignmentType.CENTER
                             })],
                             verticalAlign: VerticalAlign.CENTER,
@@ -1266,7 +1325,7 @@ async function exportToWord(id) {
                         }),
                         new TableCell({
                             children: [new Paragraph({ 
-                                children: [new TextRun({ text: subItem.NamaBarang || '', size: 20 })],
+                                children: [new TextRun({ text: toTitleCase(subItem.NamaBarang || ''), size: 22 })],
                                 alignment: AlignmentType.LEFT
                             })],
                             verticalAlign: VerticalAlign.CENTER,
@@ -1274,7 +1333,7 @@ async function exportToWord(id) {
                         }),
                         new TableCell({
                             children: [new Paragraph({ 
-                                children: [new TextRun({ text: String(subItem.Kuantitas || ''), size: 20 })], 
+                                children: [new TextRun({ text: String(subItem.Kuantitas || ''), size: 22 })], 
                                 alignment: AlignmentType.CENTER
                             })],
                             verticalAlign: VerticalAlign.CENTER,
@@ -1282,7 +1341,7 @@ async function exportToWord(id) {
                         }),
                         new TableCell({
                             children: [new Paragraph({ 
-                                children: [new TextRun({ text: subItem.Satuan || '', size: 20 })], 
+                                children: [new TextRun({text: toTitleCase(subItem.Satuan || ''), size: 22 })], 
                                 alignment: AlignmentType.CENTER
                             })],
                             verticalAlign: VerticalAlign.CENTER,
@@ -1290,7 +1349,7 @@ async function exportToWord(id) {
                         }),
                         new TableCell({
                             children: [new Paragraph({ 
-                                children: [new TextRun({ text: subItem.Merk || '-', size: 20 })], 
+                                children: [new TextRun({ text: toTitleCase(subItem.Merk || ''), size: 22 })], 
                                 alignment: AlignmentType.CENTER
                             })],
                             verticalAlign: VerticalAlign.CENTER,
@@ -1318,62 +1377,82 @@ async function exportToWord(id) {
         );
 
         // Tanda tangan
-        children.push(new Table({
-            width: { size: 100, type: WidthType.PERCENTAGE },
-            borders: {
-                top: { style: BorderStyle.NONE },
-                bottom: { style: BorderStyle.NONE },
-                left: { style: BorderStyle.NONE },
-                right: { style: BorderStyle.NONE },
-                insideHorizontal: { style: BorderStyle.NONE },
-                insideVertical: { style: BorderStyle.NONE }
-            },
-            rows: [
-                new TableRow({
+children.push(new Table({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    borders: {
+        top: { style: BorderStyle.NONE },
+        bottom: { style: BorderStyle.NONE },
+        left: { style: BorderStyle.NONE },
+        right: { style: BorderStyle.NONE },
+        insideHorizontal: { style: BorderStyle.NONE },
+        insideVertical: { style: BorderStyle.NONE }
+    },
+    rows: [
+        new TableRow({
+            children: [
+                new TableCell({
+                    width: { size: 50, type: WidthType.PERCENTAGE },
                     children: [
-                        new TableCell({
-                            width: { size: 50, type: WidthType.PERCENTAGE },
-                            children: [
-                                new Paragraph({ 
-                                    children: [ new TextRun({ text: "PIHAK KEDUA", bold: true, size: 24 }) ],
-                                    alignment: AlignmentType.CENTER 
-                                }),
-                                new Paragraph({ text: "", spacing: { after: 1200 } }),
-                                new Paragraph({ 
-                                    children: [ new TextRun({ text: item.PIHAK2 || '', bold: true, size: 24, underline: {} }) ],
-                                    alignment: AlignmentType.CENTER 
-                                }),
-                                new Paragraph({ 
-                                    children: [ new TextRun({ text: `NIP. ${item.NIP2 || ''}`, size: 24 }) ],
-                                    alignment: AlignmentType.CENTER 
-                                })
-                            ],
-                            borders: noBorders
+                        
+                        new Paragraph({ text: "", spacing: { after: 10 } }), // Spasi untuk sejajar
+                        new Paragraph({ 
+                            children: [ new TextRun({ text: "Pihak Yang Menerima", bold: true, size: 24 }) ],
+                            alignment: AlignmentType.CENTER 
                         }),
-                        new TableCell({
-                            width: { size: 50, type: WidthType.PERCENTAGE },
-                            children: [
-                                new Paragraph({ 
-                                    children: [ new TextRun({ text: "PIHAK KESATU", bold: true, size: 24 }) ],
-                                    alignment: AlignmentType.CENTER 
-                                }),
-                                new Paragraph({ text: "", spacing: { after: 1200 } }),
-                                new Paragraph({ 
-                                    children: [ new TextRun({ text: item.PIHAK1 || '', bold: true, size: 24, underline: {} }) ],
-                                    alignment: AlignmentType.CENTER 
-                                }),
-                                new Paragraph({ 
-                                    children: [ new TextRun({ text: `NIP. ${item.NIP1 || ''}`, size: 24 }) ],
-                                    alignment: AlignmentType.CENTER 
-                                })
-                            ],
-                            borders: noBorders
+                        new Paragraph({ 
+                            children: [ new TextRun({ text: toTitleCase(item.JBT2 || ''), size: 24 }) ],
+                            alignment: AlignmentType.CENTER 
+                        }),
+                        new Paragraph({ text: "", spacing: { after: 1000 } }),
+                        
+                        new Paragraph({ 
+                            children: [ new TextRun({  text: toTitleCase(item.PIHAK2 || ''), bold: true, size: 24, underline: {} }) ],
+                            alignment: AlignmentType.CENTER 
+                        }),
+                        new Paragraph({ 
+                            children: [ new TextRun({ text: `NIP. ${item.NIP2 || ''}`, size: 24 }) ],
+                            alignment: AlignmentType.CENTER 
                         })
-                    ]
+                    ],
+                    borders: noBorders
+                }),
+                new TableCell({
+                    width: { size: 50, type: WidthType.PERCENTAGE },
+                    children: [
+                        
+                        new Paragraph({ 
+                        children: [new TextRun({ text: `Tuban, ${tgl} ${bulan} ${tahun}`, size: 22 })],
+                        alignment: AlignmentType.CENTER
+                        }),
+                        new Paragraph({ 
+                            children: [ new TextRun({ text: "Pihak Yang Menyerahkan", bold: true, size: 24 }) ],
+                            alignment: AlignmentType.CENTER 
+                        }),
+                        new Paragraph({ 
+                            children: [ new TextRun({ text: toTitleCaseWithAcronym(item.JBT1 || 'Pengurus Barang UPT RSBG Tuban'), size: 24 }) ],
+                            alignment: AlignmentType.CENTER 
+                        }),
+                        new Paragraph({ text: "", spacing: { after: 1000 } }),
+                        new Paragraph({ 
+                            children: [ new TextRun({ 
+                                text: toTitleCase(item.PIHAK1 || ''), 
+                                bold: true, 
+                                size: 24, 
+                                underline: {} 
+                            }) ],
+                            alignment: AlignmentType.CENTER 
+                        }),
+                        new Paragraph({ 
+                            children: [ new TextRun({ text: 'NIP. ' + (item.NIP1 || ''), size: 24 }) ],
+                            alignment: AlignmentType.CENTER 
+                        })
+                    ],
+                    borders: noBorders
                 })
             ]
-        }));
-
+        })
+    ]
+}));
         // Halaman Dokumentasi
         if (items.some(i => i.Image)) {
             children.push(new Paragraph({ text: "", pageBreakBefore: true }));
